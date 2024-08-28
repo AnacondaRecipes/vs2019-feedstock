@@ -56,7 +56,12 @@ call :GetWin10SdkDir
 :: dir /ON here is sorting the list of folders, such that we use the latest one that we have
 for /F %%i in ('dir /ON /B "%WindowsSdkDir%\include"') DO (
   if NOT "%%~i" == "wdf" (
-    SET WindowsSDKVer=%%~i
+    :: SDKs including and after 10.0.22621.0 do not offer optimal compatibility with VS2019.
+    for /f "tokens=3 delims=." %%a in ("%%~i") do (
+        if %%a LSS 22621 (
+            SET WindowsSDKVer=%%~i
+        )
+    )
   )
 )
 if errorlevel 1 (
