@@ -52,3 +52,7 @@ robocopy "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\%VC_PATH%"  "%
 if %ERRORLEVEL% GEQ 8 exit 1
 COPY "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\%VC_PATH%\ucrtbase.dll" "%LIBRARY_BIN%"
 COPY "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\%VC_PATH%\ucrtbase.dll" "%PREFIX%"
+
+:: Deactivation script
+mkdir %PREFIX%\etc\conda\deactivate.d
+copy %RECIPE_DIR%\deactivate.bat %PREFIX%\etc\conda\deactivate.d\~vs%MSC_VER%_compiler_deactivate.bat
