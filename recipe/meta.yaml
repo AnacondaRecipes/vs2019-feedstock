@@ -13,7 +13,7 @@ package:
 
 build:
   skip: True # [not win]
-  number: 6
+  number: 7
 
 outputs:
   - name: vs{{ vsyear }}_{{ cross_compiler_target_platform }}
