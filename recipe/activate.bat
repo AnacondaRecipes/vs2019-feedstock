@@ -77,11 +77,16 @@ if errorlevel 1 (
 )
 
 IF "@cross_compiler_target_platform@" == "win-64" (
-  set "CMAKE_GEN=Visual Studio @VER@ @YEAR@ Win64"
   set "BITS=64"
 ) else (
-  set "CMAKE_GEN=Visual Studio @VER@ @YEAR@"
   set "BITS=32"
+)
+
+set "CMAKE_GEN=Visual Studio @VER@ @YEAR@"
+IF "@cross_compiler_target_platform@" == "win-64" (
+  set "CMAKE_PLAT=x64"
+) else (
+  set "CMAKE_PLAT=Win32"
 )
 
 pushd %VSINSTALLDIR%
@@ -90,6 +95,7 @@ CALL "VC\Auxiliary\Build\vcvars%BITS%.bat" -vcvars_ver=14.2 %WindowsSDKVer%
 popd
 
 IF "%CMAKE_GENERATOR%" == "" SET "CMAKE_GENERATOR=%CMAKE_GEN%"
+IF "%CMAKE_GENERATOR_PLATFORM%" == "" SET "CMAKE_GENERATOR_PLATFORM=%CMAKE_PLAT%"
 
 :GetWin10SdkDir
 call :GetWin10SdkDirHelper HKLM\SOFTWARE\Wow6432Node > nul 2>&1
